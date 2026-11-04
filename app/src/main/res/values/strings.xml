@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">filmy</string>
+    <string-array name="gatunek">
+        <item>Sci-Fi</item>
+        <item>Romans</item>
+        <item>Akcji</item>
+        <item>Komedia</item>
+    </string-array>
 </resources>
