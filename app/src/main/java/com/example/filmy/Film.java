@@ -14,14 +14,14 @@ public class Film {
     @ColumnInfo(name = "gatunek_filmu")
     public String gatunek;
 
-    public double ocena;
+    public int ocena;
 
     public int rokWydania;
 
     public Film() {
     }
 
-    public Film(String tytul, String gatunek, double ocena, int rokWydania) {
+    public Film(String tytul, String gatunek, int ocena, int rokWydania) {
         this.tytul = tytul;
         this.gatunek = gatunek;
         this.ocena = ocena;
