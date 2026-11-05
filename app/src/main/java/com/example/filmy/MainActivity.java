@@ -11,6 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import java.util.List;
 
 import com.example.filmy.Film;
 import com.example.filmy.FilmyDataBase;
@@ -22,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
     private EditText editTextTytul,editTextOcena, getEditTextRokWydania;
     private Spinner spinnerGatunek;
     private Button button;
+
+    private ListView listView;
+    private ArrayAdapter<Film> arrayAdapter;
+    private List<Film> filmy;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
         editTextTytul = findViewById(R.id.editTextText);
         editTextOcena = findViewById(R.id.editTextNumber);
+        spinnerGatunek = findViewById(R.id.spinner);
         getEditTextRokWydania= findViewById(R.id.editTextNumber2);
         button = findViewById(R.id.button);
 
@@ -69,5 +78,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        listView = findViewById(R.id.filmylist);
+        filmy = filmDatabase.zwrocFilmyDAO().zwrocWszystkieFilmy();
+        arrayAdapter=new ArrayAdapter<>(MainActivity.this,
+                android.R.layout.simple_list_item_1,
+                filmy);
+        listView.setAdapter(arrayAdapter);
+
     }
 }

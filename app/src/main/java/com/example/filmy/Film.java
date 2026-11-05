@@ -27,4 +27,14 @@ public class Film {
         this.ocena = ocena;
         this.rokWydania = rokWydania;
     }
+
+    @Override
+    public String toString() {
+        return
+                " tytul = '" + tytul + '\'' +
+                ", gatunek = '" + gatunek + '\'' +
+                ", ocena = " + ocena +
+                ", rokWydania = " + rokWydania +
+                '}';
+    }
 }
