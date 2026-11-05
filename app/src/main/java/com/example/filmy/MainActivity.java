@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.room.Room;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -85,6 +86,18 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1,
                 filmy);
         listView.setAdapter(arrayAdapter);
+
+        listView.setOnItemLongClickListener(
+                new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        filmDatabase.zwrocFilmyDAO().usunZBazy(filmy.get(i));
+                        filmy.remove(i);
+                        arrayAdapter.notifyDataSetChanged();
+                        return false;
+                    }
+                }
+        );
 
     }
 }

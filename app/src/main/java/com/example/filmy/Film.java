@@ -31,10 +31,10 @@ public class Film {
     @Override
     public String toString() {
         return
-                " tytul = '" + tytul + '\'' +
-                ", gatunek = '" + gatunek + '\'' +
-                ", ocena = " + ocena +
-                ", rokWydania = " + rokWydania +
-                '}';
+                " tytul = " + tytul + "\n" +
+                " gatunek = " + gatunek + "\n" +
+                " ocena = " + ocena + "\n" +
+                " rokWydania = " + rokWydania
+                ;
     }
 }
