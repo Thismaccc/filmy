@@ -54,6 +54,15 @@
             android:layout_height="wrap_content"
             android:text="dodaj" />
 
+        <Button
+            android:id="@+id/buttonAktualizuj"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Uaktualnij film"
+            />
+
+
+
         <ListView
             android:id="@+id/filmylist"
             android:layout_width="match_parent"

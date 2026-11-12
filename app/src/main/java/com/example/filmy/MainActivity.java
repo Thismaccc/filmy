@@ -1,6 +1,7 @@
 package com.example.filmy;
 
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -15,6 +16,8 @@ import android.widget.Spinner;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import com.example.filmy.Film;
 import com.example.filmy.FilmyDataBase;
@@ -25,12 +28,11 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText editTextTytul,editTextOcena, getEditTextRokWydania;
     private Spinner spinnerGatunek;
-    private Button button;
-
+    private Button button, buttonAktualizacja;
     private ListView listView;
     private ArrayAdapter<Film> arrayAdapter;
     private List<Film> filmy;
-
+    private Film kliknietyFilm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +46,11 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-
+        buttonAktualizacja=findViewById(R.id.buttonAktualizuj);
         editTextTytul = findViewById(R.id.editTextText);
         editTextOcena = findViewById(R.id.editTextNumber);
         spinnerGatunek = findViewById(R.id.spinner);
-        getEditTextRokWydania= findViewById(R.id.editTextNumber2);
+        getEditTextRokWydania = findViewById(R.id.editTextNumber2);
         button = findViewById(R.id.button);
 
 
@@ -76,6 +78,8 @@ public class MainActivity extends AppCompatActivity {
                                 Integer.parseInt(getEditTextRokWydania.getText().toString())
                         );
                         filmDatabase.zwrocFilmyDAO().wstawDoBazy(film);
+                        filmy.add(film);
+                        arrayAdapter.notifyDataSetChanged();
                     }
                 }
         );
@@ -87,14 +91,35 @@ public class MainActivity extends AppCompatActivity {
                 filmy);
         listView.setAdapter(arrayAdapter);
 
-        listView.setOnItemLongClickListener(
-                new AdapterView.OnItemLongClickListener() {
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
                     @Override
-                    public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                        filmDatabase.zwrocFilmyDAO().usunZBazy(filmy.get(i));
-                        filmy.remove(i);
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                        kliknietyFilm = filmy.get(i);
+                        editTextTytul.setText(kliknietyFilm.tytul);
+
+                        getEditTextRokWydania.setText(String.valueOf(kliknietyFilm.rokWydania));
+
+                        ArrayList<String> gatunki = new ArrayList<String>(
+                                Arrays.asList("Sci-Fi", "Romans", "Akcji", "Komedia")
+                        );
+                        spinnerGatunek.setSelection(gatunki.indexOf(kliknietyFilm.gatunek));
+                        editTextOcena.setText(String.valueOf(kliknietyFilm.ocena));
+                    }
+                }
+        );
+        buttonAktualizacja.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        kliknietyFilm.tytul = editTextTytul.getText().toString();
+                        kliknietyFilm.gatunek = spinnerGatunek.getSelectedItem().toString();
+                        kliknietyFilm.rokWydania = Integer.parseInt(getEditTextRokWydania.getText().toString());
+                        kliknietyFilm.ocena = Integer.parseInt(editTextOcena.getText().toString());
+
+
+                        filmDatabase.zwrocFilmyDAO().zaktualizujFilm(kliknietyFilm);
                         arrayAdapter.notifyDataSetChanged();
-                        return false;
                     }
                 }
         );
